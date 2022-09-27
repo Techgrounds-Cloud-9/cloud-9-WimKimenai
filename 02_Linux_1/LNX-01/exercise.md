@@ -20,5 +20,5 @@ After that I found an article on askubuntu which mention it was also needed to i
 
 ### Results
 I logged into my VM and used whoami to see what user I am currently using.  
-![alt text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux-Connect-VM.PNG)****  
-![alt text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux-whoami.PNG)****
+![alt text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux-Connect-VM.PNG)  
+![alt text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux-whoami.PNG)
