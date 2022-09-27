@@ -22,5 +22,9 @@ https://unix.stackexchange.com/questions/382946/getting-permission-denied-when-t
 ### Overcome challenges
 When trying to use "echo '' >> techgrounds.txt" I got a permission denied error. When searching the internet I found you can redirect echo using the "tee" command after the echo command.
 
-### Results
-[Describe the result of the exercise. An image can speak more than a thousand words, include one when this wisdom applies.]
+### Results  
+Here I used the echo command and redirected the output to a new sentence into my text file:  
+![alt-text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux-echo-append-grep.PNG)  
+
+Here I filtered the output so that it only shows the sentence containing "techgrounds" and after that I redirected the output to a new file called 'techgrounds2.txt':  
+![alt-text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux-echo-append-grep.PNG)
