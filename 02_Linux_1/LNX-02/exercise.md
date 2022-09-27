@@ -1,0 +1,36 @@
+# [Subject]
+Navigating around Linux and creating & editing files.
+
+## Key terminology
+Terminal  
+Root  
+Path  
+Command: ls  
+Command: mkdir  
+Command: nano  
+Command: pwd (print working directory)
+
+## Exercise
+* Find out your current working directory.  
+* Make a listing of all files and directories in your home directory. You should see directories like ‘Desktop’, ‘Public’ and ‘Pictures’ among others.  
+* Within your home directory, create a new directory named ‘techgrounds’.
+Within the techgrounds directory, create a file containing some text.
+* Move around your directory tree using both absolute and relative paths.
+
+
+### Sources
+https://mirrors.tripadvisor.com/centos-vault/3.8/docs/html/rhel-sbs-en-3/s1-navigating-pwd.html#:~:text=To%20determine%20the%20exact%20location,and%20type%20the%20command%20pwd.&text=This%20example%20shows%20that%20you,stands%20for%20print%20working%20directory  
+
+https://linuxconfig.org/single-linux-command-to-return-to-home-directory  
+
+https://www.javatpoint.com/linux-mkdir#:~:text=With%20the%20help%20of%20mkdir,mkdir  
+
+https://opensource.com/article/19/8/navigating-filesystem-relative-paths  
+
+https://www.youtube.com/watch?v=MYdgugJT0TQ
+
+### Overcome challenges
+I had some issues understanding absolute and relative paths. After viewing the YouTube video I included in my sources a few times and actively trying out different methods in Linux I came to have a good understanding of it.
+
+### Results
+I completed the exercise and gained more knowledge about files and directories in Linux.
