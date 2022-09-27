@@ -19,4 +19,6 @@ First I couldn't figure out why the permissions were too open on the .pem key fi
 After that I found an article on askubuntu which mention it was also needed to include the port number in the string by using -p. After that I was able to log in to the VM.
 
 ### Results
-I logged into my VM and used whoami to see what user I am currently using.
+I logged into my VM and used whoami to see what user I am currently using.  
+![alt text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux-Connect-VM.PNG)****  
+![alt text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux-whoami.PNG)****
