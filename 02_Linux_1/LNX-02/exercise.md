@@ -13,8 +13,8 @@ Command: pwd (print working directory)
 ## Exercise
 * Find out your current working directory.  
 * Make a listing of all files and directories in your home directory. You should see directories like ‘Desktop’, ‘Public’ and ‘Pictures’ among others.  
-* Within your home directory, create a new directory named ‘techgrounds’.
-Within the techgrounds directory, create a file containing some text.
+* Within your home directory, create a new directory named ‘techgrounds’.  
+* Within the techgrounds directory, create a file containing some text.  
 * Move around your directory tree using both absolute and relative paths.
 
 
@@ -33,4 +33,20 @@ https://www.youtube.com/watch?v=MYdgugJT0TQ
 I had some issues understanding absolute and relative paths. After viewing the YouTube video I included in my sources a few times and actively trying out different methods in Linux I came to have a good understanding of it.
 
 ### Results
-I completed the exercise and gained more knowledge about files and directories in Linux.
+I completed the exercise and gained more knowledge about files and directories in Linux.  
+
+Here I found out my current working directory using pwd:  
+![alt text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux-PWD.PNG)  
+
+Here I listed all files and directories in my home directory:  
+![alt-text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux-ls-home.PNG)  
+
+Here I created a new directory named 'techgrounds':  
+![alt-text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux-mkdir.PNG)  
+
+Here I create a text file within the techgrounds directory:  
+![alt-text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux-sudo-nano.PNG)  
+
+Here I moved around my directory tree using absolute and relative paths:  
+![alt-text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux-absolute-relative-paths.PNG)
+
