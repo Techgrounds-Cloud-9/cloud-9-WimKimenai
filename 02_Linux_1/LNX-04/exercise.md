@@ -24,5 +24,5 @@ For this exercise I didn't experience any challenges because we already did this
 Here I created a new user in my VM that's part of an admin group, has a password an is able to use 'sudo':  
 ![alt text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux-add-user.PNG)  
 
-Here I located the file that stores users, passwords and groups, as you can see, my new user "Wim2" is in there as well:  
+Here I located the file that stores users, passwords and groups. As you can see, my new user "Wim2" is in there as well:  
 ![alt text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux-user-list.PNG)
