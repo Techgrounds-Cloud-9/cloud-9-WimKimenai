@@ -20,5 +20,9 @@ https://www.freecodecamp.org/news/linux-how-to-add-users-and-create-users-with-u
 ### Overcome challenges
 For this exercise I didn't experience any challenges because we already did this exercise during the assessment week.
 
-### Results
-[Describe the result of the exercise. An image can speak more than a thousand words, include one when this wisdom applies.]
+### Results  
+Here I created a new user in my VM that's part of an admin group, has a password an is able to use 'sudo':  
+![alt text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux-add-user.PNG)  
+
+Here I located the file that stores users, passwords and groups:  
+![alt text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux-user-list.PNG)
