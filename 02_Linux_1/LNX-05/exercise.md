@@ -28,4 +28,23 @@ https://docs.oracle.com/cd/E19683-01/816-4883/6mb2joat3/index.html
 I first had to create a new group to change the group ownership of the file. I also didn't understand the syntax for permissions at first, so I had to study some documentation to get the basic understanding of it.
 
 ### Results
-[Describe the result of the exercise. An image can speak more than a thousand words, include one when this wisdom applies.]
+Here I created a text file:  
+![alt text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux/LNX-05/LNX-05-create-text-file.PNG)  
+
+Here i listed the file's permissions:  
+![alt text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux/LNX-05/LNX-05-permission-list.PNG)  
+
+Here I added the execute permission to the file:  
+![alt text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux/LNX-05/LNX-05-add-execute-perm.PNG)  
+
+Here I removed the read and write permissions:  
+![alt text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux/LNX-05/LNX-05-remove-rw-perms.PNG)  
+
+As you can see, now I can't read it anymore:  
+![alt text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux/LNX-05/LNX-05-perm-denied.PNG)  
+
+Here I changed the ownership of the file, and I can't read it anymore:    
+![alt text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux/LNX-05/LNX-05-change-owner.PNG)  
+
+Here I changed the group ownership to a different group:  
+![alt text](https://github.com/Techgrounds-Cloud-9/cloud-9-WimKimenai/blob/main/00_includes/Linux/LNX-05/LNX-05-chgrp.PNG)
