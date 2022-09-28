@@ -37,7 +37,7 @@ I had to study bash syntax a bit better, when I first tried to execute the scrip
 **Exercise 1**  
 
 Here I created the directory 'scripts':  
-![screenshot](/00_includes/Linux/LNX-07/LNX-07-mkdir-scripts.png)
+![screenshot](/00_includes/Linux/LNX-07/LNX-07-mkdir-scripts.PNG)
 
 
 Here I added 'scripts' to the PATH variable:  
