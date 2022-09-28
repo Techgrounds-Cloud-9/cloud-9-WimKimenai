@@ -3,7 +3,9 @@ Bash scripting (Bourne Again Shell)
 
 ## Key terminology
 PATH  
-Shebang
+Shebang (#!)  
+Variable  
+Argument
 
 ## Exercise 1
 * Create a directory called ‘scripts’. Place all the scripts you make in this directory.
