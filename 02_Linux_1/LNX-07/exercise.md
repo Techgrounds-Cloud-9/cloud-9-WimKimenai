@@ -21,7 +21,7 @@ https://www.youtube.com/watch?v=SPwyp2NG-bE
 
 https://youtu.be/l9YxTXDiiFY
 
-Exercise 2:  
+Exercise 2 & 3:  
 https://linuxhint.com/generate-random-number-bash/#:~:text=The%20random%20number%20or%20a,RANDOM%20with%20a%20specific%20value.
 
 ### Overcome challenges
