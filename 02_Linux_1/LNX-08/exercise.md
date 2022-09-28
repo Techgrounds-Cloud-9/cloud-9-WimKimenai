@@ -29,7 +29,9 @@ Here I registered the script in my crontab so that it runs every minute.
 Here I created a script that writes available disk space to a log file in ‘/var/logs’:  
 ![screenshot](/00_includes/Linux/LNX-08/LNX-08-diskspacescript.PNG)  
 
-Use a cron job so that it runs weekly.
+Here I put that script into my crontab so that it runs weekly:  
+![screenshot](/00_includes/Linux/LNX-08/LNX-08-crontab2.PNG)  
+
 
 
 
