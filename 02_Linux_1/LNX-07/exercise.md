@@ -46,7 +46,7 @@ Here I added 'scripts' to the PATH variable:
 Here I made the script that appends a line of text to a text file, using an argument to specify what text needs to be appended:  
 ![screenshot](/00_includes/Linux/LNX-07/LNX-07-appendtext-script.PNG)
 
-Here I created the httpd script: 
+Here I created the httpd script:  
 ![screenshot](/00_includes/Linux/LNX-07/LNX-07-httpd-script.PNG)
 
 **Exercise 2**  
