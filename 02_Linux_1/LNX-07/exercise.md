@@ -41,14 +41,19 @@ Here I created the directory 'scripts':
 
 
 Here I added 'scripts' to the PATH variable:  
+![screenshot](/00_includes/Linux/LNX-07/LNX-07-add-path-variable.PNG)
 
 Here I made the script that appends a line of text to a text file, using an argument to specify what text needs to be appended:  
+![screenshot](/00_includes/Linux/LNX-07/LNX-07-appendtext-script.PNG)
 
 Here I created the httpd script: 
+![screenshot](/00_includes/Linux/LNX-07/LNX-07-httpd-script.PNG)
 
 **Exercise 2**  
 Here I created a script that generates a random number between 1 and 10, stores it in a variable, and then appends the number to a text file:  
+![screenshot](/00_includes/Linux/LNX-07/LNX-07-randnumber-script.PNG)
 
 **Exercise 3**  
 Here I created a script that generates a random number between 1 and 10, stores it in a variable, and then appends the number to a text file only if the number is bigger than 5. If the number is 5 or smaller, it should append a line of text to that same text file instead:  
+![screenshot](/00_includes/Linux/LNX-07/LNX-07-exercise-3.PNG)
 
