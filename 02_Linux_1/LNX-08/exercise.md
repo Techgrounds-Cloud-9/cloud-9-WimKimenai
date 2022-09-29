@@ -3,7 +3,7 @@ Cron jobs
 
 ## Key terminology
 crontab:  
-The crontab is a file where you can schedule cronjobs. Cronjobs are scheduled actions that the system can automatically perform on certain time intervals, such as backups or creating log files.  
+The crontab is a file where you can schedule cronjobs. Cronjobs are scheduled actions that the system can automatically perform on specified time intervals, such as backups or creating log files.  
 
 df:  
 The UNIX command 'df' is short for 'disk free' and is used to display the amount of available free disk space on a drive or file system.
