@@ -2,9 +2,14 @@
 Users and groups
 
 ## Key terminology
-useradd  
-usermod  
-cat
+useradd:  
+The UNIX command 'useradd' is used to create new users on a UNIX operating system.   
+
+usermod:  
+The UNIX command 'usermod' can be used to modify the properties of a user on a UNIX operating system, such as the password or changing the home directory of the user. 
+
+cat:  
+The UNIX command 'cat' is short for 'concatenate' and can be used to create single or multiple files, view the contents of a file, merge files and redirect the output in the command line interface or files.
 
 ## Exercise  
 * Create a new user in your VM. 

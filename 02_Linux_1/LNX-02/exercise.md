@@ -2,15 +2,28 @@
 Navigating around Linux and creating & editing files.
 
 ## Key terminology
-Terminal  
-Root  
-Path  
-Command: ls  
-Command: mkdir  
-Command: nano  
-Command: pwd (print working directory)
+Terminal:  
+The terminal is a command-line interface on MacOS, similarly Windows uses Powershell.   
 
+Root:
+The root user in Linux, which is similar to the Administrator account on Windows. The root user contains all permissions and has full control over the system.  
+
+Path:  
+The directory written in text on an operating system.  
+
+Command ls:  
+A UNIX command to list files and directories in the command line interface.
+
+Command mkdir:  
+A UNIX command to make a new directory (folder).  
+
+Command nano:  
+The nano command is a command to open the nano text editor in UNIX command-line interfaces.  
+
+Command pwd:  
+A UNIX command to print the current working directory in the command-line interface. It has an easy and user-friendly graphical interface.
 ## Exercise
+
 * Find out your current working directory.  
 * Make a listing of all files and directories in your home directory. You should see directories like ‘Desktop’, ‘Public’ and ‘Pictures’ among others.  
 * Within your home directory, create a new directory named ‘techgrounds’.  

@@ -2,10 +2,14 @@
 Bash scripting (Bourne Again Shell)
 
 ## Key terminology
-PATH  
-Shebang (#!)  
-Variable  
-Argument
+Shebang:  
+A 'shebang' is expressed as '#!' and is used to specify the programming language of a script in UNIX.  
+
+Variable:  
+A variable is a value that is not fixed. It can change based on conditions, information given to a program, or even over time.  
+
+Argument:  
+An argument is a parameter that we can use to tell a script what to do. It often requires user input and performs actions based on that input.
 
 ## Exercise 1
 * Create a directory called ‘scripts’. Place all the scripts you make in this directory.

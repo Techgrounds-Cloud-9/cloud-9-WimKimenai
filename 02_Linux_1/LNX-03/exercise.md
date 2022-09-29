@@ -2,10 +2,14 @@
 Working with text (CLI)
 
 ## Key terminology
-grep  
-tee  
-echo
+Grep:  
+The UNIX command 'grep' is used to search for specific keywords or an expression in a specified file.  
 
+Tee:  
+The UNIX command 'tee' writes arguments to a specified file while also displaying the specified arguments in the command line interface.
+
+echo:  
+The UNIX command 'echo' is used to display text or a string. It can also be used to store text or strings in a bash script.
 ## Exercise
 
 * Use the echo command and output redirection to write a new sentence into your text file using the command line. The new sentence should contain the word ‘techgrounds’.  

@@ -2,9 +2,14 @@
 File permissions
 
 ## Key terminology
-chmod  
-chown  
-chgrp
+chmod:  
+The UNIX command 'chmod' is used to change the access mode of a file and assign permissions. 
+
+chown:  
+The UNIX command 'chown' is short for 'change owner' and used to take ownership of files and directories of a UNIX system. It can also be used to change group ownerships.  
+
+chgrp:  
+The UNIX command 'chgrp' is short for 'change group' and can be used to change the group ownership of a file or directory to another group.
 
 ## Exercise  
 * Create a text file.

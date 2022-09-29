@@ -2,8 +2,11 @@
 Processes
 
 ## Key terminology
-kill  
-systemctl  
+kill:  
+The UNIX command 'kill' kills/stops processes on a UNIX system.
+
+systemctl:   
+The UNIX command 'systemctl' is short for 'system control' and can be used to examine and control the status of the system and service manager.
 
 
 ## Exercise  
