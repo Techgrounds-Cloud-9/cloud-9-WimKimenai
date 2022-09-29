@@ -13,7 +13,7 @@ A virtual machine runs an operating system inside of your operating system. This
 
 
 SSH:  
-The Secure Shell Protocol is a protocol used to connect to netowrk services. It replaced the Telnet protocol and is a much safer alternative.   
+The Secure Shell Protocol is a protocol used to connect to network services. It replaced the Telnet protocol and is a much safer alternative.   
 
 ## Exercise
 * Make an SSH-connection to your machine. SSH requires the key file to have specific permissions, so you might need to change those.
