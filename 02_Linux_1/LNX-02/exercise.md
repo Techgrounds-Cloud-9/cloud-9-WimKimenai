@@ -5,7 +5,7 @@ Navigating around Linux and creating & editing files.
 Terminal:  
 The terminal is a command-line interface on MacOS, similarly Windows uses Powershell.   
 
-Root:
+Root:  
 The root user in Linux, which is similar to the Administrator account on Windows. The root user contains all permissions and has full control over the system.  
 
 Path:  
