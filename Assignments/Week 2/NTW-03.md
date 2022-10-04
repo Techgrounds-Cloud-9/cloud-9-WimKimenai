@@ -51,10 +51,9 @@ TLS and SSL.
 Application layer:  
 DHCP, HTTP/HTTPS, SMTP, FTP, SSH, IMAP, DNS.  
 
-The World Wide Web Consortium (W3C) determines what protocols we use. Many of the internet standards we know, like HTML, XHTML, CSS, XML, and many more, have been proposed, discussed, defined, and formalized by the W3C. The World Wide Web Consortium was founded in October 1994 at MIT in collaboration with CERN by the "father" of the web, Tim Berners Lee. W3C's mission is to take the web to its full potential, creating protocols and standards that support technologies with specifications, guidelines, applications, and support programs. 
+The World Wide Web Consortium (W3C) and the Internet Engineering Task Force determines what protocols we use. Many of the internet standards we know, like HTML, XHTML, CSS, XML, and many more, have been proposed, discussed, defined, and formalized by the W3C. The World Wide Web Consortium was founded in October 1994 at MIT in collaboration with CERN by the "father" of the web, Tim Berners Lee. W3C's mission is to take the web to its full potential, creating protocols and standards that support technologies with specifications, guidelines, applications, and support programs. 
 
 To introduce your own protocol, you can write a specification that defines the data you send through the TCP socket. The elements needed for a network communication protocol are: message encoding, message formatting and encapsulation, message size, message timing, and message delivery options.
-
 
 
 Here I searched for the TCP protocol in Wireshark:  
