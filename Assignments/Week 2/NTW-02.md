@@ -34,7 +34,7 @@ Gateway: the gateway is a passage that interlinks two networks together. It work
 Access points: First, as a regular wired network for wireless devices. Second, like a router for transferring data between different access points. The access point has various ports to expand the network’s size, firewall capabilities, and DHCP service. As a result, there are access points that act as a switch, DHCP server, router, and firewall.  
 
 Here I found my router's client list:  
-![screenshot](/00_includes/Week-2/ClientList.PNG)  
+![screenshot](/00_includes/Week-2/Clientlist.PNG)  
 
 Other information the router has on it's clients are; what kind of permissions they have and what ports should be forwarded. There is also a firewall built in to control in and outgoing connections. It can also log data connection and see when and how much data the device is using.  
 
