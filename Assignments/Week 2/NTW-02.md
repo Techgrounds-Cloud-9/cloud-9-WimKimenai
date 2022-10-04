@@ -2,7 +2,9 @@
 Network devices and networking hardware.
 
 ## Key terminology
-[Write a list of key terminology with a short description. To prevent duplication you can reference to previous excercises.]
+DHCP  
+ipconfig command  
+
 
 ## Exercise  
 * Benoem en beschrijf de functies van veel voorkomend netwerkapparatuur
