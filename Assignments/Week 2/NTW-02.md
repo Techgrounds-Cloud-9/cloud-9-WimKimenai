@@ -38,5 +38,5 @@ Here I found my router's client list:
 
 Other information the router has on it's clients are; what kind of permissions they have and what ports should be forwarded. There is also a firewall built in to control in and outgoing connections. It can also log data connection and see when and how much data the device is using.  
 
-This is the DHCP server on my network: 
+This is the DHCP server on my network:  
 ![screenshot](/00_includes/Week-2/DHCP-Server.PNG)  
