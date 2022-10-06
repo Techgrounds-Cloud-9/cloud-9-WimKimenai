@@ -32,7 +32,7 @@ Here I started my apache2 webserver:
 ![screenshot](/00_includes/Week-2/apache2-status.PNG)  
 
 Here is the default apache2 webpage:  
-![screenshot](/00_includes/Week-2/apache2-page.PNG) 
+
 
 I then denied the HTTP ports 80 and 58009, which didn't work. I then Googled how to block Apache2 using ufw and found on a website you need to use "ufw deny apache". 
 ![screenshot](/00_includes/Week-2/ufw-apache2.PNG)  
