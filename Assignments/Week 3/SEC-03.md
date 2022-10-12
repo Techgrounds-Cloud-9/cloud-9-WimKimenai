@@ -3,8 +3,17 @@ Identity and Access Management
 
 ## Key terminology
 Authentication  
-Authorization
+Authorization  
+Permissions  
+MFA (multi-factor authentication)  
+Knowledge Factor  
+Possession Factor  
+Inherence Factor  
+Principle of least privilege  
+Privilege creep  
 
+I will go further into these key terms under "Results".
+  
 ## Exercise
 **Study:**  
 * The difference between authentication and authorization.

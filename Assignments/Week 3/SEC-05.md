@@ -3,7 +3,11 @@ Asymmetric Encryption
 
 
 ## Key terminology
-[Write a list of key terminology with a short description. To prevent duplication you can reference to previous excercises.]
+Asymmetric encryption  
+Symmetric encryption  
+Key pairs  
+Public key  
+Private key
 
 ## Exercise
 

@@ -2,7 +2,12 @@
 Symmetric Encryption
 
 ## Key terminology
-[Write a list of key terminology with a short description. To prevent duplication you can reference to previous excercises.]
+Ciphers  
+Symmetric encryption  
+Asymmetric encryption  
+Secret key  
+AES-256  
+Base64
 
 ## Exercise
 
@@ -21,7 +26,7 @@ https://www.beaming.co.uk/knowledge-base/techs-cryptography-use-modern-day-netwo
 https://www.devglan.com/online-tools/aes-encryption-decryption
 
 ### Overcome challenges
-[Give a short description of the challeges you encountered, and how you solved them.]
+I had to find out what different symmetric encryption ciphers there were first.
 
 ### Results
 Another two historic ciphers besides the Caesaer cipher are the Enigma machine and Alberti's disk. 
