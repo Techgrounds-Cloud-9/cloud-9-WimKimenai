@@ -23,7 +23,11 @@ Key-value pairs
 ### Sources
 https://www.programiz.com/python-programming/dictionary  
 
-https://stackoverflow.com/questions/26660654/how-do-i-print-the-key-value-pairs-of-a-dictionary-in-python
+https://stackoverflow.com/questions/26660654/how-do-i-print-the-key-value-pairs-of-a-dictionary-in-python  
+
+https://www.tutorialspoint.com/How-to-save-a-Python-Dictionary-to-CSV-file  
+
+https://www.sololearn.com/Discuss/2672086/python-how-can-i-append-data-to-a-csv-file-without-over-writing-other-colums
 
 ### Overcome challenges
 [Give a short description of the challeges you encountered, and how you solved them.]
@@ -32,4 +36,8 @@ https://stackoverflow.com/questions/26660654/how-do-i-print-the-key-value-pairs-
 
 **Exercise 1:**  
 
-![screenshot](/00_includes/Python-1/key-value-pairs/exercise-1.PNG) 
+![screenshot](/00_includes/Python-1/key-value-pairs/exercise-1.PNG)  
+
+**Exercise 2:**  
+
+![screenshot](/00_includes/Python-1/key-value-pairs/exercise-2.PNG) 
