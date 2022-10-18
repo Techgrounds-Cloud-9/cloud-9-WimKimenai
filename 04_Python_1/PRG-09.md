@@ -28,6 +28,8 @@ Bonus: create a single-player version that you can play against the computer.
 
 https://www.geeksforgeeks.org/number-guessing-game-in-python/  
 
+https://realpython.com/python-rock-paper-scissors/  
+
 
 
 ### Overcome challenges
