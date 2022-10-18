@@ -2,7 +2,10 @@
 Data types and comments
 
 ## Key terminology
-[Write a list of key terminology with a short description. To prevent duplication you can reference to previous excercises.]
+String  
+Integer  
+Float  
+Boolean  
 
 ## Exercise 
 
@@ -27,13 +30,13 @@ d = "18.5"
 * Find out what data type the output of input() is. 
 * See if it is different for different kinds of input (numbers, words, etc.).
 
-
-
 ### Sources
-[List the sources you used for solving the exercise]
+https://www.w3schools.com/python/python_datatypes.asp  
+
+https://stackoverflow.com/questions/152580/whats-the-canonical-way-to-check-for-type-in-python
 
 ### Overcome challenges
-[Give a short description of the challeges you encountered, and how you solved them.]
+I had no challenges during this exercise, due to previous experience with Python.
 
 ### Results
 **Exercise 1:**  

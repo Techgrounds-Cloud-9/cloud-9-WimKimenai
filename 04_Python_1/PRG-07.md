@@ -2,7 +2,8 @@
 Lists
 
 ## Key terminology
-[Write a list of key terminology with a short description. To prevent duplication you can reference to previous excercises.]
+list  
+For loop
 
 ## Exercise  
 
@@ -21,10 +22,10 @@ Lists
 
 
 ### Sources
-[List the sources you used for solving the exercise]
+https://www.w3schools.com/python/python_lists.asp
 
 ### Overcome challenges
-[Give a short description of the challeges you encountered, and how you solved them.]
+I had previous experience with lists in Python, so I didn't have any challenges during this exercise.
 
 ### Results
 **Exercise 1:**  

@@ -5,7 +5,6 @@ Setting up
 IDE  
 PATH variable  
 
-
 ## Exercise
 
 * Install the latest version of Python from https://www.python.org/
@@ -15,10 +14,10 @@ PATH variable
 
 
 ### Sources
-[List the sources you used for solving the exercise]
+The sources were listed in the exercise.
 
 ### Overcome challenges
-[Give a short description of the challeges you encountered, and how you solved them.]
+I had no challenges during this exercise.
 
 ### Results
 I've already installed the latest version of Python:  

@@ -2,7 +2,11 @@
 Key-value pairs
 
 ## Key terminology
-[Write a list of key terminology with a short description. To prevent duplication you can reference to previous excercises.]
+Dictionary  
+CSV  
+try:  
+IOError  
+writer  
 
 ## Exercise  
 
@@ -30,7 +34,7 @@ https://www.tutorialspoint.com/How-to-save-a-Python-Dictionary-to-CSV-file
 https://www.sololearn.com/Discuss/2672086/python-how-can-i-append-data-to-a-csv-file-without-over-writing-other-colums
 
 ### Overcome challenges
-[Give a short description of the challeges you encountered, and how you solved them.]
+I had to look up how Python is able to write to a CSV file. I then read the manual from Python and gained a basic understanding of how that works.
 
 ### Results
 

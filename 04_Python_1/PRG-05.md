@@ -2,7 +2,12 @@
 Conditions
 
 ## Key terminology
-[Write a list of key terminology with a short description. To prevent duplication you can reference to previous excercises.]
+if  
+elif  
+else  
+While loop  
+continue  
+break
 
 ## Exercise  
 
@@ -16,12 +21,11 @@ Conditions
 * Create a new script.
 * Ask the user of your script for a number. Give them a response based on whether the number is higher than, lower than, or equal to 100.
 
-
 ### Sources
-[List the sources you used for solving the exercise]
+https://www.w3schools.com/python/python_conditions.asp
 
 ### Overcome challenges
-[Give a short description of the challeges you encountered, and how you solved them.]
+I experienced no challenges during this exercise, due to previous experience with Python.
 
 ### Results
 **Exercise 1:**

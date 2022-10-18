@@ -2,7 +2,9 @@
 Loops
 
 ## Key terminology
-[Write a list of key terminology with a short description. To prevent duplication you can reference to previous excercises.]
+For loop  
+While loop  
+List
 
 ## Exercise
 
@@ -29,10 +31,10 @@ arr = ["Coen", "Casper", "Joshua", "Abdessamad", "Saskia"]
 * Use a for loop to loop over the array. Print every name individually.
 
 ### Sources
-[List the sources you used for solving the exercise]
+https://www.geeksforgeeks.org/loops-in-python/
 
 ### Overcome challenges
-[Give a short description of the challeges you encountered, and how you solved them.]
+I had to look up the loop syntax, because I forgot how exactly that was formatted again.
 
 ### Results
 
