@@ -20,7 +20,7 @@ def playerInput(board):
     if board[inp-1] == "-":
         board[inp-1] = currentPlayer
     else:
-        print("Oops player is already at that spot.")
+        print("That spot has already been taken.")
 
 
 def checkHorizontle(board):
@@ -80,7 +80,7 @@ def checkIfTie(board):
     global gameRunning
     if "-" not in board:
         printBoard(board)
-        print("It is a tie!")
+        print("It's a tie!")
         gameRunning = False
 
 
