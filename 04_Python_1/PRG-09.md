@@ -2,7 +2,9 @@
 Mini project Python
 
 ## Key terminology
-[Write a list of key terminology with a short description. To prevent duplication you can reference to previous excercises.]
+randint  (Random integer)  
+While loop
+
 
 ## Exercise
 
@@ -33,7 +35,43 @@ https://realpython.com/python-rock-paper-scissors/
 
 
 ### Overcome challenges
-[Give a short description of the challeges you encountered, and how you solved them.]
+I had to study a lot of Python guides on how to create small games like these. First I had no clear direction of how I would proceed after setting up the basics. After studying those guides I came to a better understanding of how to tackle some of these problems and come up with possible ways to mimick very basic computer input.
 
 ### Results
-[Describe the result of the exercise. An image can speak more than a thousand words, include one when this wisdom applies.]
+I created the Rock Paper Scissors game by implementing "randint", which uses a random integer for the computer to pick one of the options.  
+
+```
+from random import randint
+
+t = ["Rock", "Paper", "Scissors"]
+
+computer = t[randint(0,2)]
+
+player = False
+
+while player == False:
+
+    player = input("Rock, Paper, Scissors?")
+    if player == computer:
+        print("Tie!")
+    elif player == "Rock":
+        if computer == "Paper":
+            print("You lose!", computer, "covers", player)
+        else:
+            print("You win!", player, "smashes", computer)
+    elif player == "Paper":
+        if computer == "Scissors":
+            print("You lose!", computer, "cut", player)
+        else:
+            print("You win!", player, "covers", computer)
+    elif player == "Scissors":
+        if computer == "Rock":
+            print("You lose...", computer, "smashes", player)
+        else:
+            print("You win!", player, "cut", computer)
+    else:
+        print("You're trying to use an unauthorized weapon!")
+
+    player = False
+    computer = t[randint(0,2)]
+```

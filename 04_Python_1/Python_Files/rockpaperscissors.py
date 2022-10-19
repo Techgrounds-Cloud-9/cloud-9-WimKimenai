@@ -27,7 +27,7 @@ while player == False:
         else:
             print("You win!", player, "cut", computer)
     else:
-        print("That's not a valid play. Check your spelling!")
+        print("You're trying to use an unauthorized weapon!")
 
     player = False
     computer = t[randint(0,2)]
