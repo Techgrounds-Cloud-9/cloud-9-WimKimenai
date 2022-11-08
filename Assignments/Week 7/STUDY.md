@@ -30,3 +30,9 @@ Then I added a script that's able to pull the information from the DynamoDB.
 
 As you can see, the Lambda script works and pulls the information out under the "Item" section.
 ![screenshot](/00_includes/AWS/Week-3/Lambda-3.PNG)
+
+### IAM
+
+Here I created an IAM account for myself using an Admin group with Administrator permissions.
+![screenshot](/00_includes/AWS/Week-3/IAM-2.PNG)
+![screenshot](/00_includes/AWS/Week-3/IAM-3.PNG)
