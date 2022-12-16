@@ -1,11 +1,16 @@
 from constructs import Construct
+from .networkacl import NetworkACL
+from .bucket import bucket
+import boto3
+
 from aws_cdk import (
     Duration,
     RemovalPolicy,
     Stack,
     aws_iam as iam,
     aws_ec2 as ec2,
-    aws_s3 as s3
+    aws_s3 as s3,
+    aws_s3_deployment as deploys3
 )
 
 class SampleProjectStack(Stack):
@@ -17,7 +22,7 @@ class SampleProjectStack(Stack):
         self.vpcweb = ec2.Vpc(
             self, 'WebVPC',
             ip_addresses = ec2.IpAddresses.cidr('10.10.10.0/24'),
-            availability_zones= ['eu-central-1a', 'eu-central-1b'],
+            availability_zones= ['eu-central-1a'],
             subnet_configuration=[
                 ec2.SubnetConfiguration(
                     name = 'WebPublic',
@@ -30,7 +35,7 @@ class SampleProjectStack(Stack):
         self.vpcadmin = ec2.Vpc(
             self, 'AdminVPC',
             ip_addresses = ec2.IpAddresses.cidr('10.20.20.0/24'),
-            availability_zones= ['eu-central-1a', 'eu-central-1b'],
+            availability_zones= ['eu-central-1b'],
             subnet_configuration=[
                 ec2.SubnetConfiguration(
                     name = 'AdminPublic',
@@ -39,7 +44,46 @@ class SampleProjectStack(Stack):
                 )
             # route_table_id = 
             ])
-        
+
+        # Web server Role & SG
+
+        # Web Security Group
+        WebSG = ec2.SecurityGroup(self, 'WebSecurityGroup',
+            vpc = self.vpcweb,
+            allow_all_outbound = True,
+            description = 'Web VPC Security Group'
+            )
+
+        # Web Security Group Add Rule
+        WebSG.add_ingress_rule(
+            peer = ec2.Peer.ipv4('213.10.101.81/32'),
+            connection = ec2.Port.tcp(22),
+            description ='SSH'
+        )    
+
+        # Web Security Group Add Rule
+        WebSG.add_ingress_rule(
+            peer = ec2.Peer.any_ipv4(),
+            connection = ec2.Port.tcp(80),
+            description = 'HTTP'
+        )
+
+        # Web Security Group Add Rule
+        WebSG.add_ingress_rule(
+            peer = ec2.Peer.any_ipv4(),
+            connection = ec2.Port.tcp(443),
+            description = 'HTTPS'
+        )
+
+
+        WebS3Read = iam.Role(
+            self, 'webserver-role',
+            assumed_by=iam.ServicePrincipal('ec2.amazonaws.com'),
+            managed_policies=[
+                iam.ManagedPolicy.from_aws_managed_policy_name('AmazonS3ReadOnlyAccess')
+                ],
+        )
+
         # EC2 Web Server
         EC2instance1 = ec2.Instance(self, 'webserver',
             instance_type = ec2.InstanceType('t2.micro'),
@@ -47,7 +91,9 @@ class SampleProjectStack(Stack):
                 generation = ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
                 edition = ec2.AmazonLinuxEdition.STANDARD
             ),
-            vpc = self.vpcweb)
+            vpc = self.vpcweb,
+            role = WebS3Read,
+            security_group=WebSG)
 
         # EC2 Admin / Management Server
         EC2instance2 = ec2.Instance(self, 'adminserver',
@@ -66,12 +112,10 @@ class SampleProjectStack(Stack):
         )
 
         #NetworkACL
-        vpc_web_nacl = ec2.NetworkAcl(
-            self, 'VPC-1 Web',
-            vpc = self.vpcweb,
-            subnet_selection=ec2.SubnetSelection(
-                subnet_type=ec2.SubnetType.PUBLIC
-            )
+        networkacl = NetworkACL(
+            self, 'Network ACL',
+            vpcweb = self.vpcweb,
+            vpcadmin = self.vpcadmin,
         )
 
         # Admin Security Group
@@ -95,39 +139,11 @@ class SampleProjectStack(Stack):
             description = 'RDP'
         )
 
-        # Web Security Group
-        WebSG = ec2.SecurityGroup(self, 'WebSecurityGroup',
-            vpc = self.vpcweb,
-            allow_all_outbound = True,
-            description = 'Web VPC Security Group'
-            )
+        #S3 Bucket
+        userdatabucket = bucket(self, 'UserdataBucket', resource_access=[EC2instance1, EC2instance2])
 
-        # Web Security Group Add Rule
-        WebSG.add_ingress_rule(
-            peer = ec2.Peer.ipv4('213.10.101.81/32'),
-            connection = ec2.Port.tcp(22),
-            description ='SSH'
-        )    
-
-        # Web Security Group Add Rule
-        WebSG.add_ingress_rule(
-            peer = ec2.Peer.ipv4('213.10.101.81/32'),
-            connection = ec2.Port.tcp(80),
-            description = 'HTTP'
+        userdatapath = EC2instance1.user_data.add_s3_download_command(
+            bucket=userdatabucket.userdatas3,
+            bucket_key='UserData.sh',
         )
-
-        # Web Security Group Add Rule
-        WebSG.add_ingress_rule(
-            peer = ec2.Peer.ipv4('213.10.101.81/32'),
-            connection = ec2.Port.tcp(443),
-            description = 'HTTPS'
-        )
-
-        # S3 Bucket
-        self.s3bucket = s3.Bucket(
-        self, 'wimtechgrounds-userdata',
-        encryption=s3.BucketEncryption.S3_MANAGED,
-        versioned=True,
-        enforce_ssl=True,
-        removal_policy = RemovalPolicy.DESTROY,
-        )
+        EC2instance1.user_data.add_execute_file_command(file_path=userdatapath)
