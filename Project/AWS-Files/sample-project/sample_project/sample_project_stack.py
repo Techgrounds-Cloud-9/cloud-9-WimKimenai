@@ -42,7 +42,7 @@ class SampleProjectStack(Stack):
                     subnet_type = ec2.SubnetType.PUBLIC,
                     cidr_mask = 26
                 )
-            # route_table_id = 
+            route_table= 
             ])
 
         # Web server Role & SG
@@ -56,7 +56,7 @@ class SampleProjectStack(Stack):
 
         # Web Security Group Add Rule
         WebSG.add_ingress_rule(
-            peer = ec2.Peer.ipv4('213.10.101.81/32'),
+            peer = ec2.Peer.any_ipv4(),
             connection = ec2.Port.tcp(22),
             description ='SSH'
         )    
@@ -73,49 +73,6 @@ class SampleProjectStack(Stack):
             peer = ec2.Peer.any_ipv4(),
             connection = ec2.Port.tcp(443),
             description = 'HTTPS'
-        )
-
-
-        WebS3Read = iam.Role(
-            self, 'webserver-role',
-            assumed_by=iam.ServicePrincipal('ec2.amazonaws.com'),
-            managed_policies=[
-                iam.ManagedPolicy.from_aws_managed_policy_name('AmazonS3ReadOnlyAccess')
-                ],
-        )
-
-        # EC2 Web Server
-        EC2instance1 = ec2.Instance(self, 'webserver',
-            instance_type = ec2.InstanceType('t2.micro'),
-            machine_image = ec2.MachineImage.latest_amazon_linux(
-                generation = ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
-                edition = ec2.AmazonLinuxEdition.STANDARD
-            ),
-            vpc = self.vpcweb,
-            role = WebS3Read,
-            security_group=WebSG)
-
-        # EC2 Admin / Management Server
-        EC2instance2 = ec2.Instance(self, 'adminserver',
-            instance_type = ec2.InstanceType('t2.micro'),
-            machine_image = ec2.MachineImage.latest_windows(
-                version = ec2.WindowsVersion.WINDOWS_SERVER_2019_ENGLISH_FULL_BASE
-                ),
-            vpc = self.vpcadmin,
-        )
-
-        # VPC Peering Connection
-        self.VPCPeeringConnection = ec2.CfnVPCPeeringConnection(
-            self, "peer_vpc_id",
-            peer_vpc_id = self.vpcweb.vpc_id,
-            vpc_id = self.vpcadmin.vpc_id,
-        )
-
-        #NetworkACL
-        networkacl = NetworkACL(
-            self, 'Network ACL',
-            vpcweb = self.vpcweb,
-            vpcadmin = self.vpcadmin,
         )
 
         # Admin Security Group
@@ -137,6 +94,68 @@ class SampleProjectStack(Stack):
             peer = ec2.Peer.ipv4('213.10.101.81/32'),
             connection = ec2.Port.tcp(3389),
             description = 'RDP'
+        )
+
+
+        WebS3Read = iam.Role(
+            self, 'webserver-role',
+            assumed_by=iam.ServicePrincipal('ec2.amazonaws.com'),
+            managed_policies=[
+                iam.ManagedPolicy.from_aws_managed_policy_name('AmazonS3ReadOnlyAccess')
+                ],
+        )
+
+        # EC2 Web Server
+        EC2instance1 = ec2.Instance(self, 'webserver',
+            instance_type = ec2.InstanceType('t2.micro'),
+            machine_image = ec2.MachineImage.latest_amazon_linux(
+                generation = ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
+                edition = ec2.AmazonLinuxEdition.STANDARD
+            ),
+            vpc = self.vpcweb,
+            role = WebS3Read,
+            security_group=WebSG,
+            key_name = 'WKimenaiKP',)
+
+        # EC2 Admin / Management Server
+        EC2instance2 = ec2.Instance(self, 'adminserver',
+            instance_type = ec2.InstanceType('t2.micro'),
+            machine_image = ec2.MachineImage.latest_windows(
+                version = ec2.WindowsVersion.WINDOWS_SERVER_2019_ENGLISH_FULL_BASE
+                ),
+            vpc = self.vpcadmin,
+            security_group=AdminSG,
+            key_name = 'WKimenaiKP',
+        )
+
+        # VPC Peering Connection
+        self.VPCPeeringConnection = ec2.CfnVPCPeeringConnection(
+            self, "peer_vpc_id",
+            peer_vpc_id = self.vpcweb.vpc_id,
+            vpc_id = self.vpcadmin.vpc_id,
+        )
+
+        for subnet in self.vpcweb.public_subnets:
+            ec2.CfnRoute(
+                self, 'VPC Web Peer Route',
+                route_table_id=subnet.route_table.route_table_id,
+                destination_cidr_block='10.10.20.0/24',
+                vpc_peering_connection_id=self.VPCPeeringConnection.ref,
+            )
+
+        for subnet in self.vpcadmin.public_subnets:
+            ec2.CfnRoute(
+                self, 'VPC Admin Peer Route',
+                route_table_id=subnet.route_table.route_table_id,
+                destination_cidr_block='10.10.10.0/24',
+                vpc_peering_connection_id=self.VPCPeeringConnection.ref,
+            )
+
+        #NetworkACL
+        networkacl = NetworkACL(
+            self, 'Network ACL',
+            vpcweb = self.vpcweb,
+            vpcadmin = self.vpcadmin,
         )
 
         #S3 Bucket
