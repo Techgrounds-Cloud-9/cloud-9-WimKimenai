@@ -6,10 +6,12 @@ import boto3
 from aws_cdk import (
     Duration,
     RemovalPolicy,
+    CfnOutput,
     Stack,
     aws_iam as iam,
     aws_ec2 as ec2,
     aws_s3 as s3,
+    aws_s3_assets as Asset,
     aws_s3_deployment as deploys3
 )
 
@@ -149,7 +151,7 @@ class SampleProjectStack(Stack):
         self.deployment = deploys3.BucketDeployment(
             self, 'Deploy S3',
             destination_bucket=self.userdatas3bucket,
-            sources=[deploys3.Source.asset(r"./sample_project/scripts/")]
+            sources=[deploys3.Source.asset("./sample_project/scripts/")]
             )
         
         # self.userdatas3bucket.add_to_resource_policy(
@@ -166,9 +168,9 @@ class SampleProjectStack(Stack):
             bucket_key="user_data.sh",
         )
 
-        userdata_webserver.add_execute_file_command(file_path=file_script_path)
+        # userdata_webserver.add_execute_file_command(file_path=file_script_path)
 
-        userdata_webserver.add_commands("chmod 755 -R /var/www/html/")
+        # userdata_webserver.add_commands("chmod 755 -R /var/www/html/")
 
         # EC2 Web Server
         EC2instance1 = ec2.Instance(self, 'webserver',
@@ -178,6 +180,15 @@ class SampleProjectStack(Stack):
                 edition = ec2.AmazonLinuxEdition.STANDARD
             ),
             vpc = self.vpcweb,
+            block_devices=[
+                ec2.BlockDevice(
+                    device_name="/dev/xvda",
+                    volume=ec2.BlockDeviceVolume.ebs(
+                        volume_size=8,
+                        encrypted=True,
+                        delete_on_termination=True,)
+                )
+            ],
             # role = WebS3Read,
             user_data=userdata_webserver,
             security_group=WebSG,
@@ -192,6 +203,15 @@ class SampleProjectStack(Stack):
                 version = ec2.WindowsVersion.WINDOWS_SERVER_2019_ENGLISH_FULL_BASE
                 ),
             vpc = self.vpcadmin,
+             block_devices=[
+                ec2.BlockDevice(
+                    device_name="/dev/xvda",
+                    volume=ec2.BlockDeviceVolume.ebs(
+                        volume_size=8,
+                        encrypted=True,
+                        delete_on_termination=True,)
+                )
+            ],
             security_group=AdminSG,
             key_name = 'WKimenaiKP',
         )
@@ -199,6 +219,10 @@ class SampleProjectStack(Stack):
         # S3 Read Perms
 
         self.userdatas3bucket.grant_read(EC2instance1)
+
+        userdata_webserver.add_execute_file_command(file_path=file_script_path)
+
+        userdata_webserver.add_commands("chmod 755 -R /var/www/html/")
 
         # EC2instance1.user_data.add_commands("chmod 755 -R /var/www/html/")
 
