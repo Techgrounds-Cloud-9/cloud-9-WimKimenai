@@ -138,7 +138,7 @@ class SampleProjectStack(Stack):
         #S3 Bucket
 
         self.userdatas3bucket = s3.Bucket(
-            self, construct_id,
+            self, "scriptbucket",
             encryption=s3.BucketEncryption.S3_MANAGED,
             versioned=True,
             enforce_ssl=True,
@@ -152,13 +152,13 @@ class SampleProjectStack(Stack):
             sources=[deploys3.Source.asset(r"./sample_project/scripts/")]
             )
         
-        self.userdatas3bucket.add_to_resource_policy(
-            iam.PolicyStatement(
-                effect=iam.Effect.ALLOW,
-                principals=[iam.ServicePrincipal('ec2.amazonaws.com')],
-                actions=['s3:GetObject'],
-                resources=[f'{self.userdatas3bucket.bucket_arn}/*'])
-        )
+        # self.userdatas3bucket.add_to_resource_policy(
+        #     iam.PolicyStatement(
+        #         effect=iam.Effect.ALLOW,
+        #         principals=[iam.ServicePrincipal('ec2.amazonaws.com')],
+        #         actions=['s3:GetObject'],
+        #         resources=[f'{self.userdatas3bucket.bucket_arn}/*'])
+        # )
 
         userdata_webserver = ec2.UserData.for_linux()
         file_script_path = userdata_webserver.add_s3_download_command(
