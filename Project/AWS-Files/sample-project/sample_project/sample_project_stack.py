@@ -42,8 +42,38 @@ class SampleProjectStack(Stack):
                     subnet_type = ec2.SubnetType.PUBLIC,
                     cidr_mask = 26
                 )
-            route_table= 
-            ])
+            ]
+            )
+
+        # VPC Peering Connection
+        self.VPCPeeringConnection = ec2.CfnVPCPeeringConnection(
+            self, "peer_vpc_id",
+            peer_vpc_id = self.vpcadmin.vpc_id,
+            vpc_id = self.vpcweb.vpc_id,
+        )
+
+        for subnet in self.vpcweb.public_subnets:
+            ec2.CfnRoute(
+                self, 'VPC Web Peer Route',
+                route_table_id=subnet.route_table.route_table_id,
+                destination_cidr_block='10.20.20.0/24',
+                vpc_peering_connection_id=self.VPCPeeringConnection.ref,
+            )
+
+        for subnet in self.vpcadmin.public_subnets:
+            ec2.CfnRoute(
+                self, 'VPC Admin Peer Route',
+                route_table_id=subnet.route_table.route_table_id,
+                destination_cidr_block='10.10.10.0/24',
+                vpc_peering_connection_id=self.VPCPeeringConnection.ref,
+            )
+
+        #NetworkACL
+        networkacl = NetworkACL(
+            self, 'Network ACL',
+            vpcweb = self.vpcweb,
+            vpcadmin = self.vpcadmin,
+        )
 
         # Web server Role & SG
 
@@ -105,6 +135,32 @@ class SampleProjectStack(Stack):
                 ],
         )
 
+        #S3 Bucket
+
+        self.userdatas3bucket = s3.Bucket(
+            self, construct_id,
+            encryption=s3.BucketEncryption.S3_MANAGED,
+            versioned=True,
+            enforce_ssl=True,
+            removal_policy=RemovalPolicy.DESTROY,
+            auto_delete_objects=True
+        )
+
+        self.deployment = deploys3.BucketDeployment(
+            self, 'Deploy S3',
+            destination_bucket=self.userdatas3bucket,
+            sources=[deploys3.Source.asset(r"./sample_project/scripts/")]
+            )
+        
+        self.userdatas3bucket.add_to_resource_policy(
+            iam.PolicyStatement(
+                effect=iam.Effect.ALLOW,
+                principals=[iam.ServicePrincipal('ec2.amazonaws.com')],
+                actions=['s3:GetObject'],
+                resources=[f'{self.userdatas3bucket.bucket_arn}/*'])
+        )
+
+
         # EC2 Web Server
         EC2instance1 = ec2.Instance(self, 'webserver',
             instance_type = ec2.InstanceType('t2.micro'),
@@ -113,9 +169,12 @@ class SampleProjectStack(Stack):
                 edition = ec2.AmazonLinuxEdition.STANDARD
             ),
             vpc = self.vpcweb,
-            role = WebS3Read,
+            # role = WebS3Read,
+            user_data=userdatapath,
             security_group=WebSG,
-            key_name = 'WKimenaiKP',)
+            key_name = 'WKimenaiKP',
+        )
+
 
         # EC2 Admin / Management Server
         EC2instance2 = ec2.Instance(self, 'adminserver',
@@ -128,41 +187,19 @@ class SampleProjectStack(Stack):
             key_name = 'WKimenaiKP',
         )
 
-        # VPC Peering Connection
-        self.VPCPeeringConnection = ec2.CfnVPCPeeringConnection(
-            self, "peer_vpc_id",
-            peer_vpc_id = self.vpcweb.vpc_id,
-            vpc_id = self.vpcadmin.vpc_id,
-        )
+        # S3 Read Perms
 
-        for subnet in self.vpcweb.public_subnets:
-            ec2.CfnRoute(
-                self, 'VPC Web Peer Route',
-                route_table_id=subnet.route_table.route_table_id,
-                destination_cidr_block='10.10.20.0/24',
-                vpc_peering_connection_id=self.VPCPeeringConnection.ref,
-            )
+        self.userdatas3bucket.grant_read(EC2instance1)
 
-        for subnet in self.vpcadmin.public_subnets:
-            ec2.CfnRoute(
-                self, 'VPC Admin Peer Route',
-                route_table_id=subnet.route_table.route_table_id,
-                destination_cidr_block='10.10.10.0/24',
-                vpc_peering_connection_id=self.VPCPeeringConnection.ref,
-            )
+        EC2instance1.user_data.add_commands("chmod 755 -R /var/www/html/")
 
-        #NetworkACL
-        networkacl = NetworkACL(
-            self, 'Network ACL',
-            vpcweb = self.vpcweb,
-            vpcadmin = self.vpcadmin,
-        )
+        # EC2instance1 = ec2.UserData.for_linux()
 
-        #S3 Bucket
-        userdatabucket = bucket(self, 'UserdataBucket', resource_access=[EC2instance1, EC2instance2])
-
+        # userdatabucket = bucket(self, 'UserdataBucket', resource_access=[EC2instance1, EC2instance2])
+        
         userdatapath = EC2instance1.user_data.add_s3_download_command(
-            bucket=userdatabucket.userdatas3,
-            bucket_key='UserData.sh',
+            bucket=self.userdatas3bucket,
+            bucket_key='user_data.sh',
         )
+
         EC2instance1.user_data.add_execute_file_command(file_path=userdatapath)

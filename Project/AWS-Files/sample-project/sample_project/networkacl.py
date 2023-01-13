@@ -62,6 +62,15 @@ class NetworkACL(Construct):
             rule_action = ec2.Action.ALLOW
         )
 
+        vpcweb_nacl.add_entry(
+            'Ephemeral outbound allow',
+            cidr = ec2.AclCidr.ipv4('10.20.20.0/24'),
+            rule_number = 120,
+            traffic = ec2.AclTraffic.tcp_port_range(1024, 65535),
+            direction = ec2.TrafficDirection.EGRESS,
+            rule_action = ec2.Action.ALLOW
+        )
+
         #Network ACL for Admin Server
         vpcadmin_nacl = ec2.NetworkAcl(
             self, 'VPC Admin ACL',
@@ -74,7 +83,7 @@ class NetworkACL(Construct):
         # Add rules to Network ACL
         vpcadmin_nacl.add_entry(
             'SSH inbound allow Subnet',
-            cidr = ec2.AclCidr.ipv4('10.20.20.0/24'),
+            cidr = ec2.AclCidr.ipv4('10.10.10.0/24'),
             rule_number = 110,
             traffic = ec2.AclTraffic.tcp_port_range(1024, 65535),
             direction = ec2.TrafficDirection.INGRESS,
@@ -89,11 +98,12 @@ class NetworkACL(Construct):
             direction = ec2.TrafficDirection.EGRESS,
             rule_action = ec2.Action.ALLOW
         )
+
         
         # Add all trusted IP addresses 
         vpcadmin_nacl.add_entry(
             'SSH inbound allow AdminIP',
-            cidr = ec2.AclCidr.ipv4(f'213.10.101.81/32'),
+            cidr = ec2.AclCidr.ipv4('213.10.101.81/32'),
             rule_number = 100,
             traffic = ec2.AclTraffic.tcp_port(22),
             direction = ec2.TrafficDirection.INGRESS,
@@ -103,9 +113,18 @@ class NetworkACL(Construct):
 
         vpcadmin_nacl.add_entry(
             'Outbound allow AdminIP',
-            cidr = ec2.AclCidr.ipv4(f'213.10.101.81/32'),
+            cidr = ec2.AclCidr.ipv4('213.10.101.81/32'),
             rule_number = 100,
             traffic = ec2.AclTraffic.tcp_port_range(1024, 65535),
             direction = ec2.TrafficDirection.EGRESS,
+            rule_action = ec2.Action.ALLOW
+        )
+
+        vpcadmin_nacl.add_entry(
+            'Inbound allow RDP',
+            cidr = ec2.AclCidr.ipv4('213.10.101.81/32'),
+            rule_number = 120,
+            traffic = ec2.AclTraffic.tcp_port(3389),
+            direction = ec2.TrafficDirection.INGRESS,
             rule_action = ec2.Action.ALLOW
         )
