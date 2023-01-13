@@ -160,6 +160,15 @@ class SampleProjectStack(Stack):
                 resources=[f'{self.userdatas3bucket.bucket_arn}/*'])
         )
 
+        userdata_webserver = ec2.UserData.for_linux()
+        file_script_path = userdata_webserver.add_s3_download_command(
+            bucket=self.userdatas3bucket,
+            bucket_key="user_data.sh",
+        )
+
+        userdata_webserver.add_execute_file_command(file_path=file_script_path)
+
+        userdata_webserver.add_commands("chmod 755 -R /var/www/html/")
 
         # EC2 Web Server
         EC2instance1 = ec2.Instance(self, 'webserver',
@@ -170,7 +179,7 @@ class SampleProjectStack(Stack):
             ),
             vpc = self.vpcweb,
             # role = WebS3Read,
-            user_data=userdatapath,
+            user_data=userdata_webserver,
             security_group=WebSG,
             key_name = 'WKimenaiKP',
         )
@@ -191,15 +200,15 @@ class SampleProjectStack(Stack):
 
         self.userdatas3bucket.grant_read(EC2instance1)
 
-        EC2instance1.user_data.add_commands("chmod 755 -R /var/www/html/")
+        # EC2instance1.user_data.add_commands("chmod 755 -R /var/www/html/")
 
         # EC2instance1 = ec2.UserData.for_linux()
 
         # userdatabucket = bucket(self, 'UserdataBucket', resource_access=[EC2instance1, EC2instance2])
         
-        userdatapath = EC2instance1.user_data.add_s3_download_command(
-            bucket=self.userdatas3bucket,
-            bucket_key='user_data.sh',
-        )
+        # userdatapath = EC2instance1.user_data.add_s3_download_command(
+        #     bucket=self.userdatas3bucket,
+        #     bucket_key='user_data.sh',
+        # )
 
-        EC2instance1.user_data.add_execute_file_command(file_path=userdatapath)
+        # EC2instance1.user_data.add_execute_file_command(file_path=userdatapath)
