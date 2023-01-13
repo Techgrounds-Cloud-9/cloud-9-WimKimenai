@@ -64,10 +64,19 @@ class NetworkACL(Construct):
 
         vpcweb_nacl.add_entry(
             'Ephemeral outbound allow',
-            cidr = ec2.AclCidr.ipv4('10.20.20.0/24'),
+            cidr = ec2.AclCidr.any_ipv4(),
             rule_number = 120,
             traffic = ec2.AclTraffic.tcp_port_range(1024, 65535),
             direction = ec2.TrafficDirection.EGRESS,
+            rule_action = ec2.Action.ALLOW
+        )
+
+        vpcweb_nacl.add_entry(
+            'Ephemeral inbound allow',
+            cidr = ec2.AclCidr.any_ipv4(),
+            rule_number = 120,
+            traffic = ec2.AclTraffic.tcp_port_range(1024, 65535),
+            direction = ec2.TrafficDirection.INGRESS,
             rule_action = ec2.Action.ALLOW
         )
 

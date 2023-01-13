@@ -112,7 +112,7 @@ class SampleProjectStack(Stack):
             vpc = self.vpcadmin,
             allow_all_outbound = True,
             description = 'Admin VPC Security Group'
-            )
+        )
 
         # Admin Security Group Add Rule
         AdminSG.add_ingress_rule(
@@ -151,7 +151,7 @@ class SampleProjectStack(Stack):
         self.deployment = deploys3.BucketDeployment(
             self, 'Deploy S3',
             destination_bucket=self.userdatas3bucket,
-            sources=[deploys3.Source.asset("./sample_project/scripts/")]
+            sources=[deploys3.Source.asset("./sample_project/scripts")]
             )
         
         # self.userdatas3bucket.add_to_resource_policy(
