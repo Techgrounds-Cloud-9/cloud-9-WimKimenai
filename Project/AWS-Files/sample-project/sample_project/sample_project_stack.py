@@ -127,13 +127,13 @@ class SampleProjectStack(Stack):
         )
 
 
-        WebS3Read = iam.Role(
-            self, 'webserver-role',
-            assumed_by=iam.ServicePrincipal('ec2.amazonaws.com'),
-            managed_policies=[
-                iam.ManagedPolicy.from_aws_managed_policy_name('AmazonS3ReadOnlyAccess')
-                ],
-        )
+        # WebS3Read = iam.Role(
+        #     self, 'webserver-role',
+        #     assumed_by=iam.ServicePrincipal('ec2.amazonaws.com'),
+        #     managed_policies=[
+        #         iam.ManagedPolicy.from_aws_managed_policy_name('AmazonS3ReadOnlyAccess')
+        #         ],
+        # )
 
         #S3 Bucket
 
