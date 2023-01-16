@@ -12,7 +12,9 @@ from aws_cdk import (
     aws_ec2 as ec2,
     aws_s3 as s3,
     aws_s3_assets as Asset,
-    aws_s3_deployment as deploys3
+    aws_s3_deployment as deploys3,
+    aws_backup as backup,
+    aws_events as events,
 )
 
 class SampleProjectStack(Stack):
@@ -129,14 +131,6 @@ class SampleProjectStack(Stack):
         )
 
 
-        # WebS3Read = iam.Role(
-        #     self, 'webserver-role',
-        #     assumed_by=iam.ServicePrincipal('ec2.amazonaws.com'),
-        #     managed_policies=[
-        #         iam.ManagedPolicy.from_aws_managed_policy_name('AmazonS3ReadOnlyAccess')
-        #         ],
-        # )
-
         #S3 Bucket
 
         self.userdatas3bucket = s3.Bucket(
@@ -153,24 +147,7 @@ class SampleProjectStack(Stack):
             destination_bucket=self.userdatas3bucket,
             sources=[deploys3.Source.asset("./sample_project/scripts")]
             )
-        
-        # self.userdatas3bucket.add_to_resource_policy(
-        #     iam.PolicyStatement(
-        #         effect=iam.Effect.ALLOW,
-        #         principals=[iam.ServicePrincipal('ec2.amazonaws.com')],
-        #         actions=['s3:GetObject'],
-        #         resources=[f'{self.userdatas3bucket.bucket_arn}/*'])
-        # )
 
-        # userdata_webserver = ec2.UserData.for_linux()
-        # file_script_path = userdata_webserver.add_s3_download_command(
-        #     bucket=self.userdatas3bucket,
-        #     bucket_key="user_data.sh",
-        # )
-
-        # userdata_webserver.add_execute_file_command(file_path=file_script_path)
-
-        # userdata_webserver.add_commands("chmod 755 -R /var/www/html/")
 
         # EC2 Web Server
         EC2instance1 = ec2.Instance(self, 'webserver',
@@ -189,8 +166,6 @@ class SampleProjectStack(Stack):
                         delete_on_termination=True,)
                 )
             ],
-            # role = WebS3Read,
-            # user_data=userdata_webserver,
             security_group=WebSG,
             key_name = 'WKimenaiKP',
         )
@@ -220,7 +195,6 @@ class SampleProjectStack(Stack):
 
         self.userdatas3bucket.grant_read(EC2instance1.role)
 
-        # userdata_webserver = ec2.UserData.for_linux()
         file_script_path = EC2instance1.user_data.add_s3_download_command(
             bucket=self.userdatas3bucket,
             bucket_key="user_data.sh",
@@ -228,17 +202,36 @@ class SampleProjectStack(Stack):
 
         EC2instance1.user_data.add_execute_file_command(file_path=file_script_path)
 
-        # EC2instance1.user_data.add_commands("chmod 755 -R /var/www/html/")
+        # Backup
+        self.backup_vault = backup.BackupVault(
+            self, 'BackupVault',
+            backup_vault_name='BackupVault',
+            )
 
-        # EC2instance1.user_data.add_commands("chmod 755 -R /var/www/html/")
+        # Backup Plan
+        self.backup_plan = backup.BackupPlan(
+            self, 'BackupPlan',
+            backup_vault=self.backup_vault
+            )
 
-        # EC2instance1 = ec2.UserData.for_linux()
+        self.backup_vault.apply_removal_policy(RemovalPolicy.DESTROY)
+        self.backup_plan.apply_removal_policy(RemovalPolicy.DESTROY)
 
-        # userdatabucket = bucket(self, 'UserdataBucket', resource_access=[EC2instance1, EC2instance2])
+        # Backup Resources
+        self.backup_plan.add_selection('Backup Selection',
+            resources=[
+                backup.BackupResource.from_ec2_instance(EC2instance1),
+                backup.BackupResource.from_ec2_instance(EC2instance2),
+                ],
+            allow_restores=True,
+            )
         
-        # userdatapath = EC2instance1.user_data.add_s3_download_command(
-        #     bucket=self.userdatas3bucket,
-        #     bucket_key='user_data.sh',
-        # )
-
-        # EC2instance1.user_data.add_execute_file_command(file_path=userdatapath)
+        # Add backup rules
+        self.backup_plan.add_rule(backup.BackupPlanRule(
+            enable_continuous_backup=True,
+            delete_after=Duration.days(7),
+            schedule_expression=events.Schedule.cron(
+                hour="5",
+                minute="0",
+                ))
+            )
