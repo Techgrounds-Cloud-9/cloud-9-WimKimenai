@@ -15,6 +15,7 @@ from aws_cdk import (
     aws_s3_deployment as deploys3,
     aws_backup as backup,
     aws_events as events,
+    aws_kms as kms
 )
 
 class SampleProjectStack(Stack):
@@ -130,12 +131,37 @@ class SampleProjectStack(Stack):
             description = 'RDP'
         )
 
+        # KMS Module
+
+        AdminKMS_key = kms.Key
+        WebKMS_key = kms.Key
+        VaultKMS_key = kms.Key
+
+        AdminKMS_key = kms.Key(self, "Admin Key",
+            enable_key_rotation = True,
+            alias = "AdminKMS_key",
+            removal_policy = RemovalPolicy.DESTROY)
+        self.adminkms_key = AdminKMS_key
+
+        WebKMS_key = kms.Key(self, "Web Key",
+            enable_key_rotation = True,
+            alias = "WebKMS_key",
+            removal_policy = RemovalPolicy.DESTROY)
+        self.webkms_key = WebKMS_key
+
+        VaultKMS_key = kms.Key(self, "Vault Key",
+            enable_key_rotation = True,
+            alias = "VaultKMS_key",
+            removal_policy = RemovalPolicy.DESTROY)
+        self.vaultkms_key = VaultKMS_key
+
 
         #S3 Bucket
 
         self.userdatas3bucket = s3.Bucket(
             self, "scriptbucket",
             encryption=s3.BucketEncryption.S3_MANAGED,
+            kms_key = VaultKMS_key,
             versioned=True,
             enforce_ssl=True,
             removal_policy=RemovalPolicy.DESTROY,
@@ -163,6 +189,7 @@ class SampleProjectStack(Stack):
                     volume=ec2.BlockDeviceVolume.ebs(
                         volume_size=8,
                         encrypted=True,
+                        kms_key = WebKMS_key,
                         delete_on_termination=True,)
                 )
             ],
@@ -184,6 +211,7 @@ class SampleProjectStack(Stack):
                     volume=ec2.BlockDeviceVolume.ebs(
                         volume_size=8,
                         encrypted=True,
+                        kms_key = AdminKMS_key,
                         delete_on_termination=True,)
                 )
             ],
@@ -231,7 +259,7 @@ class SampleProjectStack(Stack):
             enable_continuous_backup=True,
             delete_after=Duration.days(7),
             schedule_expression=events.Schedule.cron(
-                hour="5",
+                hour="4",
                 minute="0",
                 ))
             )
