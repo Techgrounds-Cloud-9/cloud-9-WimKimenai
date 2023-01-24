@@ -31,6 +31,7 @@ class SampleProjectStack(Stack):
             self, 'WebVPC',
             ip_addresses = ec2.IpAddresses.cidr('10.10.10.0/24'),
             max_azs=3,
+            nat_gateways=1,
             subnet_configuration=[
                 ec2.SubnetConfiguration(
                     name = 'WebPublic',
@@ -39,7 +40,7 @@ class SampleProjectStack(Stack):
                 ),
                 ec2.SubnetConfiguration(
                     name="Private_Web_VPC", 
-                    cidr_mask=28, 
+                    cidr_mask=26, 
                     subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS),
             ])
 
@@ -189,6 +190,13 @@ class SampleProjectStack(Stack):
 
         self.user_data = ec2.UserData.for_linux()
 
+
+        launchtemplaterole = iam.Role(
+            self,
+            "Launch Template Role",
+            assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"),
+        )
+
         # Launch Template
         self.launch_temp = ec2.LaunchTemplate(
             self, "Launch template",
@@ -198,8 +206,8 @@ class SampleProjectStack(Stack):
             machine_image=ec2.MachineImage.latest_amazon_linux(
                 generation=ec2.AmazonLinuxGeneration.AMAZON_LINUX_2
             ),
-            # role=role,
-            user_data=self.user_data,
+            role=launchtemplaterole,
+            user_data=userdatas3bucket,
             security_group=WebSG,
             block_devices=[
                 ec2.BlockDevice(
@@ -343,9 +351,9 @@ class SampleProjectStack(Stack):
 
         # S3 Read Perms
 
-        self.userdatas3bucket.grant_read(EC2instance1.role)
+        self.userdatas3bucket.grant_read(launchtemplaterole.role)
 
-        file_script_path = EC2instance1.user_data.add_s3_download_command(
+        file_script_path = self.launch_temp.user_data.add_s3_download_command(
             bucket=self.userdatas3bucket,
             bucket_key="user_data.sh",
         )
