@@ -215,7 +215,7 @@ class SampleProjectStack(Stack):
 
         # create and configure the auto scaling group
         self.as_group = autoscaling.AutoScalingGroup(
-            self, "Auto_Scaling_Group",
+            self, "Auto Scaling_Group",
             vpc=self.vpcweb,
             vpc_subnets=ec2.SubnetSelection(
                 subnet_type=ec2.SubnetType.PUBLIC
@@ -238,31 +238,46 @@ class SampleProjectStack(Stack):
         )
         self.elb.add_redirect()
 
+        http_listener = self.elb.add_listener(
+            "HTTP listener",
+            port=80,
+            open=True,
+        )
+
+        web_target_group = http_listener.add_targets(
+            "ASG webserver",
+            port=80,
+            targets=[self.as_group],
+            health_check=elb.HealthCheck(
+                enabled=True,
+            ),
+        )
+
         # SSL Certificate ARN
         # arn = "arn:aws:acm:eu-central-1:663303000432:certificate/7a324a63-01ba-438c-b7a6-95b6b4e4aecb"
 
         # call the certificate itself
         # certificate = acm.Certificate.from_certificate_arn(self, "SSL Cert", arn)
 
-        https_listener = self.elb.add_listener(
-            "Listener for HTTPS",
-            port=443,
-            open=True,
-            ssl_policy=elb.SslPolicy.FORWARD_SECRECY_TLS12,
-            certificates=[certificate],
-        )
+        # https_listener = self.elb.add_listener(
+        #     "Listener for HTTPS",
+        #     port=443,
+        #     open=True,
+        #     ssl_policy=elb.SslPolicy.FORWARD_SECRECY_TLS12,
+        #     certificates=[certificate],
+        # )
 
-        asg_target_group = https_listener.add_targets(
-            "ASG webserver",
-            port=80,
-            targets=[self.as_group],
-            health_check=elb.HealthCheck(
-                enabled=True,
-                port="80",
-            ),
-            stickiness_cookie_duration=Duration.minutes(5),
-            stickiness_cookie_name="pbc",
-        )
+        # asg_target_group = https_listener.add_targets(
+        #     "ASG webserver",
+        #     port=80,
+        #     targets=[self.as_group],
+        #     health_check=elb.HealthCheck(
+        #         enabled=True,
+        #         port="80",
+        #     ),
+        #     stickiness_cookie_duration=Duration.minutes(5),
+        #     stickiness_cookie_name="pbc",
+        # )
 
         asg_userdata = self.as_group.user_data.add_s3_download_command(
             bucket=self.userdatas3bucket,
@@ -283,26 +298,26 @@ class SampleProjectStack(Stack):
         
 
         # EC2 Web Server
-        EC2instance1 = ec2.Instance(self, 'webserver',
-            instance_type = ec2.InstanceType('t2.micro'),
-            machine_image = ec2.MachineImage.latest_amazon_linux(
-                generation = ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
-                edition = ec2.AmazonLinuxEdition.STANDARD
-            ),
-            vpc = self.vpcweb,
-            block_devices=[
-                ec2.BlockDevice(
-                    device_name="/dev/xvda",
-                    volume=ec2.BlockDeviceVolume.ebs(
-                        volume_size=8,
-                        encrypted=True,
-                        kms_key = WebKMS_key,
-                        delete_on_termination=True,)
-                )
-            ],
-            security_group=WebSG,
-            key_name = 'WKimenaiKP',
-        )
+        # EC2instance1 = ec2.Instance(self, 'webserver',
+        #     instance_type = ec2.InstanceType('t2.micro'),
+        #     machine_image = ec2.MachineImage.latest_amazon_linux(
+        #         generation = ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
+        #         edition = ec2.AmazonLinuxEdition.STANDARD
+        #     ),
+        #     vpc = self.vpcweb,
+        #     block_devices=[
+        #         ec2.BlockDevice(
+        #             device_name="/dev/xvda",
+        #             volume=ec2.BlockDeviceVolume.ebs(
+        #                 volume_size=8,
+        #                 encrypted=True,
+        #                 kms_key = WebKMS_key,
+        #                 delete_on_termination=True,)
+        #         )
+        #     ],
+        #     security_group=WebSG,
+        #     key_name = 'WKimenaiKP',
+        # )
 
 
         # EC2 Admin / Management Server
