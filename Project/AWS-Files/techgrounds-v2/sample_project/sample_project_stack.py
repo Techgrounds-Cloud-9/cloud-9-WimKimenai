@@ -40,7 +40,7 @@ class SampleProjectStack(Stack):
                 ec2.SubnetConfiguration(
                     name="Private_Web_VPC", 
                     cidr_mask=28, 
-                    subnet_type=ec2.SubnetType.PRIVATE_ISOLATED),
+                    subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS),
             ])
 
         # VPC 2
