@@ -159,14 +159,7 @@ class SampleProjectStack(Stack):
             pending_window=Duration.days(10),
             removal_policy = RemovalPolicy.DESTROY)
         self.webkms_key = WebKMS_key
-
-        # VaultKMS_key = kms.Key(self, "VaultKey",
-        #     enable_key_rotation = True,
-        #     alias = "VaultKMS_key",
-        #     pending_window=Duration.days(10),
-        #     removal_policy = RemovalPolicy.DESTROY)
-        # self.vaultkms_key = VaultKMS_key
-
+        
 
         #S3 Bucket
 
@@ -189,7 +182,6 @@ class SampleProjectStack(Stack):
         # Auto Scaling
 
         self.user_data = ec2.UserData.for_linux()
-
 
         launchtemplaterole = iam.Role(
             self,
@@ -246,7 +238,6 @@ class SampleProjectStack(Stack):
             security_group=WebSG,
             internet_facing=True,
         )
-        # self.elb.add_redirect()
 
         http_listener = self.elb.add_listener(
             "HTTP listener",
@@ -262,73 +253,6 @@ class SampleProjectStack(Stack):
                 enabled=True,
             ),
         )
-
-        # SSL Certificate ARN
-        # arn = "arn:aws:acm:eu-central-1:663303000432:certificate/7a324a63-01ba-438c-b7a6-95b6b4e4aecb"
-
-        # call the certificate itself
-        # certificate = acm.Certificate.from_certificate_arn(self, "SSL Cert", arn)
-
-        # https_listener = self.elb.add_listener(
-        #     "Listener for HTTPS",
-        #     port=443,
-        #     open=True,
-        #     ssl_policy=elb.SslPolicy.FORWARD_SECRECY_TLS12,
-        #     certificates=[certificate],
-        # )
-
-        # asg_target_group = https_listener.add_targets(
-        #     "ASG webserver",
-        #     port=80,
-        #     targets=[self.as_group],
-        #     health_check=elb.HealthCheck(
-        #         enabled=True,
-        #         port="80",
-        #     ),
-        #     stickiness_cookie_duration=Duration.minutes(5),
-        #     stickiness_cookie_name="pbc",
-        # )
-
-        asg_userdata = self.as_group.user_data.add_s3_download_command(
-            bucket=self.userdatas3bucket,
-            bucket_key="user_data.sh"
-        )
-
-        # execute the userdata file
-        self.as_group.user_data.add_execute_file_command(file_path=asg_userdata)
-
-
-        # Elastic Load Balancer
-        # self.elb = elb.ApplicationLoadBalancer(
-        #     self, "Application Load Balancer",
-        #     vpc=self.vpcweb,
-        #     internet_facing=True,
-        # )
-        # self.elb.add_redirect()
-        
-
-        # EC2 Web Server
-        # EC2instance1 = ec2.Instance(self, 'webserver',
-        #     instance_type = ec2.InstanceType('t2.micro'),
-        #     machine_image = ec2.MachineImage.latest_amazon_linux(
-        #         generation = ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
-        #         edition = ec2.AmazonLinuxEdition.STANDARD
-        #     ),
-        #     vpc = self.vpcweb,
-        #     block_devices=[
-        #         ec2.BlockDevice(
-        #             device_name="/dev/xvda",
-        #             volume=ec2.BlockDeviceVolume.ebs(
-        #                 volume_size=8,
-        #                 encrypted=True,
-        #                 kms_key = WebKMS_key,
-        #                 delete_on_termination=True,)
-        #         )
-        #     ],
-        #     security_group=WebSG,
-        #     key_name = 'WKimenaiKP',
-        # )
-
 
         # EC2 Admin / Management Server
         EC2instance2 = ec2.Instance(self, 'adminserver',
