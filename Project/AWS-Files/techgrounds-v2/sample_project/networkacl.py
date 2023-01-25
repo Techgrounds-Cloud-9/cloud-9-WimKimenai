@@ -175,3 +175,21 @@ class NetworkACL(Construct):
             direction=ec2.TrafficDirection.INGRESS,
             rule_action=ec2.Action.ALLOW,
         )
+
+        webvpc_priv_nacl.add_entry(
+            id="Private Web Allow HTTP inbound from anywhere",
+            cidr=ec2.AclCidr.any_ipv4(),
+            rule_number=140,
+            traffic=ec2.AclTraffic.tcp_port(80),
+            direction=ec2.TrafficDirection.INGRESS,
+            rule_action=ec2.Action.ALLOW,
+        )
+
+        webvpc_priv_nacl.add_entry(
+            id="Private Web Allow HTTP inbound from anywhere",
+            cidr=ec2.AclCidr.any_ipv4(),
+            rule_number=150,
+            traffic=ec2.AclTraffic.tcp_port(80),
+            direction=ec2.TrafficDirection.EGRESS,
+            rule_action=ec2.Action.ALLOW,
+        )
