@@ -351,7 +351,7 @@ class SampleProjectStack(Stack):
 
         # S3 Read Perms
 
-        self.userdatas3bucket.grant_read(launchtemplaterole.role)
+        self.userdatas3bucket.grant_read(self.launch_temp)
 
         file_script_path = self.launch_temp.user_data.add_s3_download_command(
             bucket=self.userdatas3bucket,
