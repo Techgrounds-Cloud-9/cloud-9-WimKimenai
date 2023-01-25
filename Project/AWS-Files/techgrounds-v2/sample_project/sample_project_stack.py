@@ -362,35 +362,35 @@ class SampleProjectStack(Stack):
 
         self.launch_temp.user_data.add_execute_file_command(file_path=file_script_path)
 
-        # Backup
-        self.backup_vault = backup.BackupVault(
-            self, 'BackupVault',
-            backup_vault_name='BackupVault',
-            )
+        # # Backup
+        # self.backup_vault = backup.BackupVault(
+        #     self, 'BackupVault',
+        #     backup_vault_name='BackupVault',
+        #     )
 
-        # Backup Plan
-        self.backup_plan = backup.BackupPlan(
-            self, 'BackupPlan',
-            backup_vault=self.backup_vault
-            )
+        # # Backup Plan
+        # self.backup_plan = backup.BackupPlan(
+        #     self, 'BackupPlan',
+        #     backup_vault=self.backup_vault
+        #     )
 
-        self.backup_vault.apply_removal_policy(RemovalPolicy.DESTROY)
-        self.backup_plan.apply_removal_policy(RemovalPolicy.DESTROY)
+        # self.backup_vault.apply_removal_policy(RemovalPolicy.DESTROY)
+        # self.backup_plan.apply_removal_policy(RemovalPolicy.DESTROY)
 
-        # Backup Resources
-        self.backup_plan.add_selection('Backup Selection',
-            resources=[
-                backup.BackupResource.from_ec2_instance(EC2instance2),
-                ],
-            allow_restores=True,
-            )
+        # # Backup Resources
+        # self.backup_plan.add_selection('Backup Selection',
+        #     resources=[
+        #         backup.BackupResource.from_ec2_instance(EC2instance2),
+        #         ],
+        #     allow_restores=True,
+        #     )
         
-        # Add backup rules
-        self.backup_plan.add_rule(backup.BackupPlanRule(
-            enable_continuous_backup=True,
-            delete_after=Duration.days(7),
-            schedule_expression=events.Schedule.cron(
-                hour="4",
-                minute="0",
-                ))
-            )
+        # # Add backup rules
+        # self.backup_plan.add_rule(backup.BackupPlanRule(
+        #     enable_continuous_backup=True,
+        #     delete_after=Duration.days(7),
+        #     schedule_expression=events.Schedule.cron(
+        #         hour="4",
+        #         minute="0",
+        #         ))
+        #     )
