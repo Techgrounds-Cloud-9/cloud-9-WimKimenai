@@ -1,7 +1,6 @@
 from constructs import Construct
 from .networkacl import NetworkACL
 from .bucket import bucket
-import boto3
 
 from aws_cdk import (
     Duration,
@@ -18,7 +17,6 @@ from aws_cdk import (
     aws_kms as kms,
     aws_elasticloadbalancingv2 as elb,
     aws_autoscaling as autoscaling,
-    aws_certificatemanager as acm,
 )
 
 class SampleProjectStack(Stack):
@@ -159,7 +157,7 @@ class SampleProjectStack(Stack):
             pending_window=Duration.days(10),
             removal_policy = RemovalPolicy.DESTROY)
         self.webkms_key = WebKMS_key
-        
+
 
         #S3 Bucket
 
