@@ -221,27 +221,29 @@ class SampleProjectStack(Stack):
             ]    
         )
 
-        # create and configure the auto scaling group
+        # Auto scaling group
         self.as_group = autoscaling.AutoScalingGroup(
             self, "Auto Scaling_Group",
             vpc=self.vpcweb,
             vpc_subnets=ec2.SubnetSelection(
-                subnet_type=ec2.SubnetType.PUBLIC
+                subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS
             ),
             launch_template=self.launch_temp,
             min_capacity=1,
             max_capacity=3,
         )
 
-        # scaling policy
+        # AUTO SCALING scaling policy
         self.as_group.scale_on_cpu_utilization(
             "cpu auto scaling",
             target_utilization_percent=80,
         )
 
+        # LOAD BALANCER
         self.elb = elb.ApplicationLoadBalancer(
             self, "Application Load Balancer",
             vpc=self.vpcweb,
+            security_group=WebSG,
             internet_facing=True,
         )
         self.elb.add_redirect()
