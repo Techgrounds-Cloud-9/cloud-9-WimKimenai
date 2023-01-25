@@ -143,7 +143,7 @@ class NetworkACL(Construct):
             self, "VPC Web Private Subnet NACL",
             vpc=vpcweb,
             subnet_selection=ec2.SubnetSelection(
-                subnet_type=ec2.SubnetType.PRIVATE_ISOLATED    
+                subnet_type=ec2.SubnetType.PRIVATE_WITH_EGRESS
             )
         )      
 
