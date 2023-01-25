@@ -151,7 +151,7 @@ class NetworkACL(Construct):
 
         webvpc_priv_nacl.add_entry(
             id="Allow Ephemeral inbound",
-            cidr=ec2.AclCidr.ipv4('10.10.10.0/24'),
+            cidr=ec2.AclCidr.any_ipv4(),
             rule_number=120,
             traffic=ec2.AclTraffic.tcp_port_range(1024, 65535),
             direction=ec2.TrafficDirection.INGRESS,
@@ -160,7 +160,7 @@ class NetworkACL(Construct):
 
         webvpc_priv_nacl.add_entry(
             id="Allow Ephemeral outbound",
-            cidr=ec2.AclCidr.ipv4('10.10.10.0/24'),
+            cidr=ec2.AclCidr.any_ipv4(),
             rule_number=120,
             traffic=ec2.AclTraffic.tcp_port_range(1024, 65535),
             direction=ec2.TrafficDirection.EGRESS,
@@ -186,9 +186,9 @@ class NetworkACL(Construct):
         )
 
         webvpc_priv_nacl.add_entry(
-            id="Private Web Allow HTTP inbound from anywhere",
+            id="Private Web Allow HTTP outbound from anywhere",
             cidr=ec2.AclCidr.any_ipv4(),
-            rule_number=150,
+            rule_number=140,
             traffic=ec2.AclTraffic.tcp_port(80),
             direction=ec2.TrafficDirection.EGRESS,
             rule_action=ec2.Action.ALLOW,
