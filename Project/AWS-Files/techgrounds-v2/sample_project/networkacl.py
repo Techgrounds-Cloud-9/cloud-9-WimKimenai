@@ -177,6 +177,15 @@ class NetworkACL(Construct):
         )
 
         webvpc_priv_nacl.add_entry(
+            id="Allow SSH outbound from anywhere",
+            cidr=ec2.AclCidr.ipv4('10.10.10.0/24'),
+            rule_number=130,
+            traffic=ec2.AclTraffic.tcp_port(22),
+            direction=ec2.TrafficDirection.EGRESS,
+            rule_action=ec2.Action.ALLOW,
+        )
+
+        webvpc_priv_nacl.add_entry(
             id="Private Web Allow HTTP inbound from anywhere",
             cidr=ec2.AclCidr.any_ipv4(),
             rule_number=140,
