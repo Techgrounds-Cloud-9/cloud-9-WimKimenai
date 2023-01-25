@@ -137,3 +137,41 @@ class NetworkACL(Construct):
             direction = ec2.TrafficDirection.INGRESS,
             rule_action = ec2.Action.ALLOW
         )
+
+        # create and configure NACL for webserver private
+        webvpc_priv_nacl = ec2.NetworkAcl(
+            self, "VPC Web Private Subnet NACL",
+            vpc=vpcweb,
+            subnet_selection=ec2.SubnetSelection(
+                subnet_type=ec2.SubnetType.PRIVATE_ISOLATED    
+            )
+        )      
+
+        # add inbound and outbound rules for the webserver NACL
+
+        webvpc_priv_nacl.add_entry(
+            id="Allow Ephemeral inbound",
+            cidr=ec2.AclCidr.ipv4('10.10.10.0/24'),
+            rule_number=120,
+            traffic=ec2.AclTraffic.tcp_port_range(1024, 65535),
+            direction=ec2.TrafficDirection.INGRESS,
+            rule_action=ec2.Action.ALLOW,
+        )
+
+        webvpc_priv_nacl.add_entry(
+            id="Allow Ephemeral outbound",
+            cidr=ec2.AclCidr.ipv4('10.10.10.0/24'),
+            rule_number=120,
+            traffic=ec2.AclTraffic.tcp_port_range(1024, 65535),
+            direction=ec2.TrafficDirection.EGRESS,
+            rule_action=ec2.Action.ALLOW,
+        )
+
+        webvpc_priv_nacl.add_entry(
+            id="Allow SSH inbound from anywhere",
+            cidr=ec2.AclCidr.ipv4('10.10.10.0/24'),
+            rule_number=130,
+            traffic=ec2.AclTraffic.tcp_port(22),
+            direction=ec2.TrafficDirection.INGRESS,
+            rule_action=ec2.Action.ALLOW,
+        )

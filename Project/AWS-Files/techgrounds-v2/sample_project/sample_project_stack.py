@@ -207,7 +207,7 @@ class SampleProjectStack(Stack):
                 generation=ec2.AmazonLinuxGeneration.AMAZON_LINUX_2
             ),
             role=launchtemplaterole,
-            user_data=userdatas3bucket,
+            user_data=self.user_data,
             security_group=WebSG,
             block_devices=[
                 ec2.BlockDevice(
@@ -358,7 +358,7 @@ class SampleProjectStack(Stack):
             bucket_key="user_data.sh",
         )
 
-        EC2instance1.user_data.add_execute_file_command(file_path=file_script_path)
+        self.launch_temp.user_data.add_execute_file_command(file_path=file_script_path)
 
         # Backup
         self.backup_vault = backup.BackupVault(
@@ -378,7 +378,7 @@ class SampleProjectStack(Stack):
         # Backup Resources
         self.backup_plan.add_selection('Backup Selection',
             resources=[
-                backup.BackupResource.from_ec2_instance(EC2instance1),
+                backup.BackupResource.from_ec2_instance(self.launch_temp),
                 backup.BackupResource.from_ec2_instance(EC2instance2),
                 ],
             allow_restores=True,
