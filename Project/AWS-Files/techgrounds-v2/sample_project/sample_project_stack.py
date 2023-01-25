@@ -160,12 +160,12 @@ class SampleProjectStack(Stack):
             removal_policy = RemovalPolicy.DESTROY)
         self.webkms_key = WebKMS_key
 
-        VaultKMS_key = kms.Key(self, "VaultKey",
-            enable_key_rotation = True,
-            alias = "VaultKMS_key",
-            pending_window=Duration.days(10),
-            removal_policy = RemovalPolicy.DESTROY)
-        self.vaultkms_key = VaultKMS_key
+        # VaultKMS_key = kms.Key(self, "VaultKey",
+        #     enable_key_rotation = True,
+        #     alias = "VaultKMS_key",
+        #     pending_window=Duration.days(10),
+        #     removal_policy = RemovalPolicy.DESTROY)
+        # self.vaultkms_key = VaultKMS_key
 
 
         #S3 Bucket
@@ -246,7 +246,7 @@ class SampleProjectStack(Stack):
             security_group=WebSG,
             internet_facing=True,
         )
-        self.elb.add_redirect()
+        # self.elb.add_redirect()
 
         http_listener = self.elb.add_listener(
             "HTTP listener",
@@ -353,7 +353,7 @@ class SampleProjectStack(Stack):
 
         # S3 Read Perms
 
-        self.userdatas3bucket.grant_read(self.launch_temp)
+        self.userdatas3bucket.grant_read(launchtemplaterole)
 
         file_script_path = self.launch_temp.user_data.add_s3_download_command(
             bucket=self.userdatas3bucket,
@@ -380,7 +380,6 @@ class SampleProjectStack(Stack):
         # Backup Resources
         self.backup_plan.add_selection('Backup Selection',
             resources=[
-                backup.BackupResource.from_ec2_instance(self.launch_temp),
                 backup.BackupResource.from_ec2_instance(EC2instance2),
                 ],
             allow_restores=True,
